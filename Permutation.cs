@@ -43,7 +43,8 @@ namespace ProgramTestMain
                 List<int> newList = new List<int>();
                 for (int j = 0; j < notUsedList.Count; j++)
                 {
-                    if (j != i)    newList.Add(j);
+                    if (notUsedList[j] != notUsedList[i])
+                        newList.Add(notUsedList[j]);
                 }                
 
                 var ret = PermutationRec(input, newList);
