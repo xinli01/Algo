@@ -7,6 +7,8 @@ namespace ProgramTestMain
 {
     public class Permutation
     {
+        internal static int count = 0;
+
         // entry
         public static void PrintPermutation(string input)
         {
@@ -21,14 +23,15 @@ namespace ProgramTestMain
             return;
         }
 
-        private static string PermutationRec(string input, List<int> notUsedList)
+        private static List<string> PermutationRec(string input, List<int> notUsedList)
         {
-            string result = null;
+            var result = new List<string>();
             
             // base case
             if (notUsedList.Count == 1)
             {
-                return input.Substring(notUsedList[0], 1);
+                result.Add(input.Substring(notUsedList[0], 1));
+                return result;
             }
 
             // recursive case
@@ -40,22 +43,28 @@ namespace ProgramTestMain
                 List<int> newList = new List<int>();
                 for (int j = 0; j < notUsedList.Count; j++)
                 {
-                    if (j != notUsedList[i])
-                        newList.Add(j);
+                    if (j != i)    newList.Add(j);
                 }                
 
-                string ret = PermutationRec(input, newList);
+                var ret = PermutationRec(input, newList);
 
                 // concat
-                result = string.Concat(sub1, ret);
-
-                if (notUsedList.Count == input.Length)
+                foreach (string x in ret)
                 {
-                    Console.WriteLine(result);
-                    return null;
+                    result.Add(string.Concat(sub1, x));
+                }                
+            }
+
+            if (notUsedList.Count == input.Length)
+            {
+                foreach (string s in result)
+                {
+                    Console.WriteLine(s);
+                    count++;
                 }
 
-                return result;
+                Console.WriteLine("total count is {0}", count);
+                return null;
             }
 
             return result;
