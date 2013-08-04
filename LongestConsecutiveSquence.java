@@ -1,63 +1,45 @@
-// Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        //HashMap<int, int> map = new HashMap<int, int>();
-        unordered_map<int, int> map = new unordered_map<int, int>();
+public int longestConsecutive(int[] num) {
         
-        foreach(int x in num)
-        {
-            map[num[i]] = i;
-        }
-        
-        //HashMap<int, int> countMapDown = new HashMap<int, int>(num.Count);
-        //HashMap<int, int> countMapUp = new HashMap<int, int>(num.Count);
-        unordered_map<int, int> countMapDown = new unordered_map<int, int>(num.Count);
-        unordered_map<int, int> countMapUp = new unordered_map<int, int>(num.Count);
+        HashMap<Integer, Integer> numMap = new HashMap<Integer, Integer>();
+        ArrayList<Integer> checked = new ArrayList<Integer>();
         
         int max = 0;
-        
-        for(int j=0; j < num.Count; j++)
-        {
-            int tempDown = num[j] ;
-            int downCount = 0;
-            
-            while (map.containsKey(tempDown))
-            {
-                if(countMapDown.ContainsKey(tempDown)
-                {
-                    downCount = downCount + countMapDown[tempDown];
-                    break;
-                }
                 
-                downCount++;
-                tempDown--;
+        for(int i =0; i< num.length; i++)
+        {    
+            numMap.put(new Integer(num[i]), new Integer(i));
+            checked.add(i, 0);
+        }        
+        
+        for(int j=0; j < num.length; j++)
+        {
+            if (checked.get(new Integer(j)) == 1)
+            {
+               continue;
             }
             
-            CountMapDown[num[j]] = downCount;
+            checked.set(new Integer(j), 1);
+            
+            int tempDown = num[j] ;
+            int count = 0;
+            
+            while (numMap.containsKey(--tempDown))
+            {
+                checked.set(numMap.get(tempDown), 1);                
+                count++;                
+            }
             
             int tempUp = num[j];
-            int upCount = 0;
             
-            while (map.containsKey(tempUp))
+            
+            while (numMap.containsKey(++tempUp))
             {
-                if(countMapUp.ContainsKey(tempUp))
-                {
-                    upCount = upCount + countMapUp[tempUp];
-                    break;
-                }
-                
-                upCount++;
-                tempUp++;
+                checked.set(numMap.get(tempUp), 1);                 
+                count++;               
             }
-            
-            CountMapUp[num[j]] = upCount;
-            
-            int totalLength = downCount + upCount +1; 
-            
-            if (totalLength > max)
-            {
-                max = totalLength;
-            }
-            
+                            
+            max = count+1 > max ? count+1 : max;
         }
         
-        return max;       
+        return max;  
+    }
