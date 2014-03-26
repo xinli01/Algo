@@ -1,12 +1,26 @@
 public class Solution {
     
-    void swap(int index1, int index2, int[] A)
-    {
-        int temp = A[index1];
-        A[index1] = A[index2];
-        A[index2] = temp;
+    // here is a better solution
+    public int removeElement2(int[] A, int elem) {
+        int begin = 0;
+        
+        for (int i=0; i< A.length; i++)
+        {
+            if (A[i] != elem)
+            {
+                if (begin != i)
+                {
+                    A[begin] = A[i];
+                }
+                
+                begin++;
+            }
+        }
+        
+        return begin;
     }
     
+    // original solution
     public int removeElement(int[] A, int elem) {
         
         // boundary checking
@@ -47,5 +61,12 @@ public class Solution {
         }
         
         return index;
+    }
+    
+    void swap(int index1, int index2, int[] A)
+    {
+        int temp = A[index1];
+        A[index1] = A[index2];
+        A[index2] = temp;
     }
 }
